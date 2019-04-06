@@ -1,0 +1,7 @@
+Django==2.1.7
+get==2019.3.22
+post==2019.3.22
+public==2019.3.22
+pytz==2018.9
+query-string==2019.3.22
+request==2019.3.22
