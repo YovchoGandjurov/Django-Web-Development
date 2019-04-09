@@ -5,6 +5,34 @@ from django.core.serializers import serialize
 import json
 
 
+def create_animal(request):
+    # 127.0.0.1:8000/animals/create/?name='test_name'&age=5&breed='breed_test'&description='desc_test'&kind='C'&image_url='https://images.mentalfloss.com/sites/default/files/styles/mf_image_16x9/public/549585-istock-909106260.jpg?itok=ds7LqH1N&resize=1100x1100    
+    name = request.GET.get('name')
+    age = request.GET.get('age')
+    kind = request.GET.get('kind')
+    image_url = request.GET.get('image_url')
+    description = request.GET.get('description')
+    breed = request.GET.get('breed')
+
+    animal = Animal(name=name, age=age, kind=kind, image_url=image_url,
+                    description=description, breed=breed)
+    animal.save()
+    return HttpResponse('created')
+
+
+def edit_animal(request, animal_id):
+    animal = Animal.objects.get(pk=animal_id)
+    name = request.GET.get('name')
+    animal.name = name
+    animal.save()
+    return HttpResponse('edited')
+
+
+def delete_animal(request, animal_id):
+    Animal.objects.get(pk=animal_id).delete()
+    return HttpResponse('deleted')
+
+
 def serialized_data(data):
     try:
         return serialize('json', data)
@@ -13,6 +41,11 @@ def serialized_data(data):
 
 
 def get_all_animals(request):
+    name = request.GET.get('name')
+    if name:
+        animal = Animal.objects.all().filter(name=name)
+        return HttpResponse(serialized_data(animal))
+
     animals = Animal.objects.all()
     return HttpResponse(serialized_data(animals))
 
@@ -25,3 +58,8 @@ def get_animal(request, animal_id):
 def get_all_dogs(request):
     dogs = Animal.objects.filter(age=16, kind='D')
     return HttpResponse(serialized_data(dogs))
+
+
+def order_animals(request):
+    animals = Animal.objects.all().order_by('age')
+    return HttpResponse(serialized_data(animals))
