@@ -3,6 +3,8 @@ from django.http import HttpResponse
 from .models import Animal
 from django.core.serializers import serialize
 import json
+from .forms import AnimalForm
+from django.contrib import messages
 
 
 def create_animal(request):
@@ -63,3 +65,25 @@ def get_all_dogs(request):
 def order_animals(request):
     animals = Animal.objects.all().order_by('age')
     return HttpResponse(serialized_data(animals))
+
+
+def create_animal_form(request):
+
+    if request.method == "GET":
+        form = AnimalForm
+        context = {'form': form}
+        return render(request, template_name='create.html', context=context)
+
+    elif request.method == 'POST':
+        form = AnimalForm(request.POST)
+
+        if form.is_valid():
+            form.save()
+            return HttpResponse('saved')
+        else:
+            # messages.error(request, 'Error')
+            # return render(request, template_name='create.html',
+            #               context={'form': form})
+            for field in form.errors:
+                form[field].field.widget.attrs['class'] += ' alert alert-danger'
+            return render(request, 'create.html', {'form': form})

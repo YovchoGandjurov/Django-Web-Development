@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Create Form</title>
+    <link rel="stylesheet" 
+    href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" 
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" 
+    crossorigin="anonymous">
+</head>
+
+<body>
+<div class="row">
+    <div class="col-lg-4"></div>
+
+    <div class="col-lg-4">
+        <form method="post" style="border: 1px solid grey; margin: 5% 0%; padding: 10% 10%">
+            {% csrf_token %}
+                {{form}}
+            <button type="submit" class="btn btn-primary" style="margin-top:5%">Submit</button>
+        </form> 
+    </div>
+    
+    <div class="col-lg-4"></div>
+</div>
+</body>
+
+</html>
+
+
