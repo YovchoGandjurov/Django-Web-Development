@@ -7,9 +7,8 @@ from django.core.validators import RegexValidator, URLValidator, \
 class AnimalForm(forms.ModelForm):
     name_error = "Animal's name must starts with capital letter followed by letters \
                   from a-z"
-    age_error = "Animal's age must be positive number"
-    breed_error = "Animal's breed must starts with capital letter followed by letters \
-                  from a-z"
+    age_error = "Animal's age must be positive number."
+    breed_error = "Animal's breed must starts with capital letter."
 
     choices = list(Animal.KIND_CHOICES)
 
@@ -25,10 +24,11 @@ class AnimalForm(forms.ModelForm):
 
     breed = forms.CharField(
         required=True,
-        validators=[RegexValidator(r'^[A-Z][a-z]+$', message=breed_error)],
+        validators=[RegexValidator(r'^[A-Z].*', message=breed_error)],
         widget=forms.TextInput(attrs={'class': 'form-control'}))
 
     description = forms.CharField(
+        required=True,
         widget=forms.Textarea(attrs={'class': 'form-control'}))
 
     image_url = forms.URLField(

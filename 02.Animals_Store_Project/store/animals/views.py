@@ -1,14 +1,15 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from .models import Animal
 from django.core.serializers import serialize
 import json
 from .forms import AnimalForm
 from django.contrib import messages
+from django.views.generic import ListView, CreateView
 
 
+# replaced with form
 def create_animal(request):
-    # 127.0.0.1:8000/animals/create/?name='test_name'&age=5&breed='breed_test'&description='desc_test'&kind='C'&image_url='https://images.mentalfloss.com/sites/default/files/styles/mf_image_16x9/public/549585-istock-909106260.jpg?itok=ds7LqH1N&resize=1100x1100    
     name = request.GET.get('name')
     age = request.GET.get('age')
     kind = request.GET.get('kind')
@@ -42,6 +43,7 @@ def serialized_data(data):
         return serialize('json', [data])
 
 
+# replaced with ListView
 def get_all_animals(request):
     name = request.GET.get('name')
     if name:
@@ -67,23 +69,41 @@ def order_animals(request):
     return HttpResponse(serialized_data(animals))
 
 
+# replace with CreateView
 def create_animal_form(request):
-
-    if request.method == "GET":
-        form = AnimalForm
-        context = {'form': form}
-        return render(request, template_name='create.html', context=context)
-
-    elif request.method == 'POST':
+    if request.method == 'POST':
         form = AnimalForm(request.POST)
 
         if form.is_valid():
             form.save()
-            return HttpResponse('saved')
+            animals = Animal.objects.all()
+            return HttpResponseRedirect('/animals/all/')
         else:
-            # messages.error(request, 'Error')
-            # return render(request, template_name='create.html',
-            #               context={'form': form})
-            for field in form.errors:
-                form[field].field.widget.attrs['class'] += ' alert alert-danger'
-            return render(request, 'create.html', {'form': form})
+            messages.error(request, 'Error')
+            return render(request, template_name='create.html',
+                          context={'form': form})
+            # for field in form.errors:
+            #     form[field].field.widget.attrs['class'] += \
+            #                             ' alert alert-danger'
+    else:
+        form = AnimalForm()
+
+    return render(request, template_name='create.html',
+                  context={'form': form})
+
+
+# ###################################################################
+# CRUD - Class Based View
+# ###################################################################
+
+class AnimalList(ListView):
+    model = Animal
+    context_object_name = 'animals'
+    template_name = 'animal_list.html'
+
+
+class AnimalCreate(CreateView):
+    model = Animal
+    form_class = AnimalForm
+    template_name = 'create.html'
+    success_url = '/animals/all/'
