@@ -5,10 +5,10 @@ from django.core.serializers import serialize
 import json
 from .forms import AnimalForm
 from django.contrib import messages
-from django.views.generic import ListView, CreateView
+from django.views.generic import ListView, CreateView, DetailView, DeleteView, UpdateView
 
 
-# replaced with form
+# replaced with form and CreateView
 def create_animal(request):
     name = request.GET.get('name')
     age = request.GET.get('age')
@@ -106,4 +106,22 @@ class AnimalCreate(CreateView):
     model = Animal
     form_class = AnimalForm
     template_name = 'create.html'
+    success_url = '/animals/all/'
+
+
+class AnimalDetails(DetailView):
+    model = Animal
+    template_name = 'animal_details.html'
+
+
+class AnimalUpdate(UpdateView):
+    model = Animal
+    form_class = AnimalForm
+    template_name = 'create.html'
+    success_url = '/animals/all/'
+
+
+class AnimalDelete(DeleteView):
+    model = Animal
+    template_name = 'animal_delete.html'
     success_url = '/animals/all/'

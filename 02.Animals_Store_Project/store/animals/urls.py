@@ -4,11 +4,14 @@ from . import views
 
 urlpatterns = [
     path('all/', views.AnimalList.as_view(), name='all'),
-    path('create/', views.AnimalCreate.as_view(), name='create'),
+    re_path('^create/$', views.AnimalCreate.as_view(), name='create'),
+    re_path('^details/(?P<pk>[-\w]+)/$', views.AnimalDetails.as_view(),
+            name='details'),
+    re_path('^edit/(?P<pk>[-\w]+)/$', views.AnimalUpdate.as_view(),
+            name='edit'),
+    re_path('delete/(?P<pk>\d+)/$', views.AnimalDelete.as_view(), name='delete'),
 
     path('all/<int:animal_id>/', views.get_animal, name="animal"),
     path('all/dogs/', views.get_all_dogs, name='dogs'),
-    path('all/ordered/', views.order_animals, name='all_ordered'),
-    path('edit/<int:animal_id>/', views.edit_animal, name='edit'),
-    path('delete/<int:animal_id>/', views.delete_animal, name='delete')
+    path('all/ordered/', views.order_animals, name='all_ordered')
 ]
