@@ -5,7 +5,8 @@ from django.core.serializers import serialize
 import json
 from .forms import AnimalForm
 from django.contrib import messages
-from django.views.generic import ListView, CreateView, DetailView, DeleteView, UpdateView
+from django.views.generic import ListView, CreateView, DetailView, \
+    UpdateView, DeleteView
 
 
 # replaced with form and CreateView
@@ -95,6 +96,7 @@ def create_animal_form(request):
 # ###################################################################
 # CRUD - Class Based View
 # ###################################################################
+
 
 class AnimalList(ListView):
     model = Animal

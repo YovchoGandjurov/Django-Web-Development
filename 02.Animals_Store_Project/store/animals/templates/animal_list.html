@@ -18,14 +18,14 @@
     <a href="{% url 'create' %}" class="btn btn-success">Create animal</a><br/><br/>
 
     <div class="row">
-    {% for animal in animals %}
-        <div class="col-lg-4">    
+    {% for ani in animals %}
+        <div class="col-lg-4">
             <div class="card" style="width: 18rem;">
-                <img src="{{animal.image_url}}" class="card-img-top" alt="{{animal.name}}">
+                <img src="{{ani.image_url}}" class="card-img-top" alt="{{ani.name}}">
                 <div class="card-body">
-                    <h5 class="card-title">{{animal.name}}</h5>
-                    <a href="{% url 'details' animal.id %}" class="btn btn-primary">See details</a>
-                    <a href="{% url 'delete' animal.id %}" class="btn btn-danger">Delete</a>
+                    <h5 class="card-title">{{ani.name}}</h5>
+                    <a href="{% url 'details' ani.id %}" class="btn btn-primary">See details</a>
+                    <a href="{% url 'delete' ani.id %}" class="btn btn-danger">Delete</a>
                 </div>
                 <hr style="clear:both;">
             </div>
