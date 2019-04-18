@@ -8,6 +8,7 @@
     crossorigin="anonymous">
 </head>
 <body>
+    <p>{{asdasdas.first_name}}</p>
     <div class="container">
         <div class="row">
             <div class="col-lg-6">
@@ -21,7 +22,7 @@
                         <h3>Breed: {{animal.breed}}</h3>
                         <p>Description: {{animal.description}}</p>
                     </div>
-                    <a href="{% url 'edit' animal.id%}" class="btn btn-primary">Edit {{animal.name}}</a>
+                    <a href="{% url 'animals:edit' animal.id%}" class="btn btn-primary">Edit {{animal.name}}</a>
                 </div>
             </div>
         </div>

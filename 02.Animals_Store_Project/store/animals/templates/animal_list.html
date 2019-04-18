@@ -12,20 +12,29 @@
 </head>
 
 <body>
+<nav>
+    <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Tutorials</a></li>
+        <li><a href="#">About</a></li>
+        <li><a href="#">Newsletter</a></li>
+        <li><a href="#">Contact</a></li>
+    </ul>
+</nav>
 
 
 <div class="container" style="margin-top:5%">
-    <a href="{% url 'create' %}" class="btn btn-success">Create animal</a><br/><br/>
+    <a href="{% url 'animals:create' %}" class="btn btn-success">Create animal</a><br/><br/>
 
     <div class="row">
-    {% for ani in animals %}
+    {% for animal in animals %}
         <div class="col-lg-4">
             <div class="card" style="width: 18rem;">
-                <img src="{{ani.image_url}}" class="card-img-top" alt="{{ani.name}}">
+                <img src="{{animal.image_url}}" class="card-img-top" alt="{{animal.name}}">
                 <div class="card-body">
-                    <h5 class="card-title">{{ani.name}}</h5>
-                    <a href="{% url 'details' ani.id %}" class="btn btn-primary">See details</a>
-                    <a href="{% url 'delete' ani.id %}" class="btn btn-danger">Delete</a>
+                    <h5 class="card-title">{{animal.name}}</h5>
+                    <a href="{% url 'animals:details' animal.id %}" class="btn btn-primary">See details</a>
+                    <a href="{% url 'animals:delete' animal.id %}" class="btn btn-danger">Delete</a>
                 </div>
                 <hr style="clear:both;">
             </div>

@@ -24,6 +24,7 @@ def create_animal(request):
     return HttpResponse('created')
 
 
+# replaced with UpdateView
 def edit_animal(request, animal_id):
     animal = Animal.objects.get(pk=animal_id)
     name = request.GET.get('name')
@@ -32,6 +33,7 @@ def edit_animal(request, animal_id):
     return HttpResponse('edited')
 
 
+# replaced with DeleteView
 def delete_animal(request, animal_id):
     Animal.objects.get(pk=animal_id).delete()
     return HttpResponse('deleted')
@@ -114,6 +116,7 @@ class AnimalCreate(CreateView):
 class AnimalDetails(DetailView):
     model = Animal
     template_name = 'animal_details.html'
+    context_object_name = 'animal'
 
 
 class AnimalUpdate(UpdateView):

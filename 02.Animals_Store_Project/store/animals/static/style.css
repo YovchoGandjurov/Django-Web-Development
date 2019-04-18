@@ -1,3 +1,26 @@
 body {
     background: lightblue
 }
+
+nav {
+    background: green 
+ }
+ 
+ ul {
+     margin: 55%
+ }
+ 
+ ul, body {
+     margin: 0
+ }
+ 
+ nav ul li {
+     display: inline-block;
+     margin: 15px;
+ }
+ 
+ nav ul li a{
+     font-family: Helvetica, sans-seriff;
+     text-decoration: none;
+     color: white
+ }
