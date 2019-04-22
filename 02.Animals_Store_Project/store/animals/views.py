@@ -6,7 +6,8 @@ import json
 from .forms import AnimalForm
 from django.contrib import messages
 from django.views.generic import ListView, CreateView, DetailView, \
-    UpdateView, DeleteView
+    UpdateView, DeleteView # , BlogListView
+from django.db.models import Q
 
 
 # replaced with form and CreateView
@@ -57,11 +58,13 @@ def get_all_animals(request):
     return HttpResponse(serialized_data(animals))
 
 
+# replaced with ListView
 def get_animal(request, animal_id):
     animal = Animal.objects.get(pk=animal_id)
     return HttpResponse(serialized_data(animal))
 
 
+# replaced with DogView
 def get_all_dogs(request):
     dogs = Animal.objects.filter(age=16, kind='D')
     return HttpResponse(serialized_data(dogs))
@@ -95,6 +98,10 @@ def create_animal_form(request):
                   context={'form': form})
 
 
+def search(request):
+    query = request.GET['search']
+    # t = 
+
 # ###################################################################
 # CRUD - Class Based View
 # ###################################################################
@@ -104,6 +111,15 @@ class AnimalList(ListView):
     model = Animal
     context_object_name = 'animals'
     template_name = 'animal_list.html'
+
+    def get_queryset(self):
+        name = self.request.GET.get('name')
+
+        if name is None:
+            animals = Animal.objects.all()
+        else:
+            animals = Animal.objects.filter(name=name)
+        return animals
 
 
 class DogList(ListView):
