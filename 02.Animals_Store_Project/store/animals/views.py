@@ -106,6 +106,26 @@ class AnimalList(ListView):
     template_name = 'animal_list.html'
 
 
+class DogList(ListView):
+    model = Animal
+    context_object_name = 'animals'
+    template_name = 'animal_list.html'
+
+    def get_queryset(self):
+        animals = Animal.objects.filter(kind='D')
+        return animals
+
+
+class CatList(ListView):
+    model = Animal
+    context_object_name = 'animals'
+    template_name = 'animal_list.html'
+
+    def get_queryset(self):
+        animals = Animal.objects.filter(kind='C')
+        return animals
+
+
 class AnimalCreate(CreateView):
     model = Animal
     form_class = AnimalForm

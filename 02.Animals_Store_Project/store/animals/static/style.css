@@ -7,7 +7,7 @@ nav {
  }
  
  ul {
-     margin: 55%
+     margin: 22%
  }
  
  ul, body {
@@ -16,7 +16,6 @@ nav {
  
  nav ul li {
      display: inline-block;
-     margin: 15px;
  }
  
  nav ul li a{

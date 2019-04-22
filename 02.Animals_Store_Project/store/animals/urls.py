@@ -14,8 +14,8 @@ urlpatterns = [
             name='edit'),
     re_path('delete/(?P<pk>\d+)/$', views.AnimalDelete.as_view(),
             name='delete'),
+    path('dogs/', views.DogList.as_view(), name='dogs'),
+    path('cats/', views.CatList.as_view(), name='cats')
 
-    # path('all/<int:animal_id>/', views.get_animal, name="animal"),
-    # path('all/dogs/', views.get_all_dogs, name='dogs'),
     # path('all/ordered/', views.order_animals, name='all_ordered')
 ]
