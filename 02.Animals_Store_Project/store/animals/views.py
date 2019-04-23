@@ -122,21 +122,13 @@ class AnimalList(ListView):
         return animals
 
 
-class DogList(ListView):
-    model = Animal
-    context_object_name = 'animals'
-    template_name = 'animal_list.html'
-
+class DogList(AnimalList):
     def get_queryset(self):
         animals = Animal.objects.filter(kind='D')
         return animals
 
 
-class CatList(ListView):
-    model = Animal
-    context_object_name = 'animals'
-    template_name = 'animal_list.html'
-
+class CatList(AnimalList):
     def get_queryset(self):
         animals = Animal.objects.filter(kind='C')
         return animals
