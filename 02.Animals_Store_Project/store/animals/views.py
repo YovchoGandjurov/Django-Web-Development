@@ -6,8 +6,7 @@ import json
 from .forms import AnimalForm
 from django.contrib import messages
 from django.views.generic import ListView, CreateView, DetailView, \
-    UpdateView, DeleteView # , BlogListView
-from django.db.models import Q
+    UpdateView, DeleteView
 
 
 # replaced with form and CreateView
@@ -97,10 +96,6 @@ def create_animal_form(request):
     return render(request, template_name='create.html',
                   context={'form': form})
 
-
-def search(request):
-    query = request.GET['search']
-    # t = 
 
 # ###################################################################
 # CRUD - Class Based View
