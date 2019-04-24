@@ -6,7 +6,7 @@ class Question(models.Model):
     question = models.TextField()
 
     def __str__(self):
-        return 'f{self.author} {self.question}'
+        return f'{self.author} {self.question}'
 
 
 class Answer(models.Model):
@@ -18,4 +18,4 @@ class Answer(models.Model):
                                  blank=True, related_name='questions')
 
     def __str__(self):
-        return 'f{self.author} {self.content[:10]}...'
+        return f'{self.author} {self.content[:10]}...'
