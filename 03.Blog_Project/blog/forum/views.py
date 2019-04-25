@@ -83,18 +83,33 @@ class AnswerDetail(APIView):
     Retrieve, update or delete a answer instance.
     """
     def get_object(self, answer_id, question_id):
+        # Another way without get_object:
+        # answer = get_object_or_404(Answer, pk=answer_id,
+        #                            question_id=question_id)
+
         try:
             return Answer.objects.get(pk=answer_id, question_id=question_id)
         except Answer.DoesNotExist:
             raise Http404()
 
     def get(self, request, question_id, answer_id):
-        # Another way without get_object:
-        # answer = get_object_or_404(Answer, pk=answer_id, question_id=question_id)
+        url_path = request.get_full_path()
 
         answer = self.get_object(answer_id, question_id)
         serializer = AnswerSerializer(answer)
-        return Response(serializer.data)
+
+        if 'dislike' in url_path:
+            answer.dislike += 1
+            answer.save()
+            return Response(serializer.data)
+
+        elif 'like' in url_path:
+            answer.like += 1
+            answer.save()
+            return Response(serializer.data)
+
+        else:
+            return Response(serializer.data)
 
     def put(self, request, question_id, answer_id):
         answer = self.get_object(answer_id=answer_id, question_id=question_id)
