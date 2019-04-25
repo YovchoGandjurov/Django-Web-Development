@@ -14,8 +14,8 @@ class Answer(models.Model):
     content = models.TextField()
     like = models.PositiveIntegerField()
     dislike = models.PositiveIntegerField()
-    question = models.ForeignKey(Question, on_delete=models.CASCADE, null=True, 
-                                 blank=True, related_name='questions')
+    question = models.ForeignKey(Question, on_delete=models.CASCADE, null=True,
+                                 blank=True, related_name='answers')
 
     def __str__(self):
         return f'{self.author} {self.content[:10]}...'
