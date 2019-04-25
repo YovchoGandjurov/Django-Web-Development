@@ -7,6 +7,7 @@ class AnswerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Answer
         fields = 'id author content like dislike'.split()
+        # read_only_fields = ('question', )
 
 
 class QuestionSerializer(serializers.ModelSerializer):
@@ -15,3 +16,10 @@ class QuestionSerializer(serializers.ModelSerializer):
     class Meta:
         model = Question
         fields = 'id author question answers'.split()
+
+    def create(self, validated_data):
+        answer_data = validated_data.pop('answers')
+        question = Question.objects.create(**validated_data)
+        Answer.objects.create(question=question, **answer_data)
+
+        return question
