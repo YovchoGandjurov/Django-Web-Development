@@ -1,6 +1,5 @@
 from rest_framework import serializers
-from .models import Question
-from .models import Answer
+from .models import Question, Answer, Profile
 
 
 class AnswerSerializer(serializers.ModelSerializer):
@@ -23,3 +22,11 @@ class QuestionSerializer(serializers.ModelSerializer):
         Answer.objects.create(question=question, **answer_data)
 
         return question
+
+
+class ProfileSerializer(serializers.ModelSerializer):
+    questions = QuestionSerializer(many=True, read_only=True)
+
+    class Meta:
+        model = Profile
+        fields = ['id', 'email', 'questions']

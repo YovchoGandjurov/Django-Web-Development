@@ -5,8 +5,9 @@ from rest_framework.views import APIView
 from django.shortcuts import get_object_or_404
 from django.http import Http404
 
-from .models import Question, Answer
-from .serializers import QuestionSerializer, AnswerSerializer
+from .models import Question, Answer, Profile
+from .serializers import QuestionSerializer, AnswerSerializer, \
+                         ProfileSerializer
 
 
 class QuestionsList(APIView):
@@ -124,3 +125,10 @@ class AnswerDetail(APIView):
         answer = self.get_object(answer_id=answer_id, question_id=question_id)
         answer.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+
+class UserList(APIView):
+    def get(self, request):
+        profile = Profile.objects.all()
+        serializer = ProfileSerializer(profile, many=True)
+        return Response(serializer.data)
