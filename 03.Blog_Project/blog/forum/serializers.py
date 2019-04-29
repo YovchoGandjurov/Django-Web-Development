@@ -5,7 +5,7 @@ from .models import Question, Answer, Profile
 class AnswerSerializer(serializers.ModelSerializer):
     class Meta:
         model = Answer
-        fields = 'id author content like dislike'.split()
+        fields = 'id author content like dislike question'.split()
         # read_only_fields = ('question', )
 
 
