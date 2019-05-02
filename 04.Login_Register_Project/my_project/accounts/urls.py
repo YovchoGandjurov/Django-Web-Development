@@ -6,11 +6,13 @@ from django.views.generic import TemplateView
 
 
 urlpatterns = [
-    re_path('logout/', views.LogoutView.as_view(),
+    re_path('logout/', TemplateView.as_view(template_name='logout.html'),
             name='logout'),
-    path('', include('django.contrib.auth.urls')),
     re_path('^profile/$', views.redirect_to_user_profile,
             name="redirect-user-detail"),
     re_path('^profile/(?P<pk>\d+)/$', views.UserProfileDetail.as_view(),
             name='user-detail'),
+    path('signup/', views.SignUp.as_view(), name='signup'),
+
+    path('', include('django.contrib.auth.urls')),
 ]
