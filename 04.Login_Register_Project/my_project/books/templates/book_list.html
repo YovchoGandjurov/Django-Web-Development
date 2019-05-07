@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</head>
+<body>
+    <div class="container">
+        {% if books %}
+        <div class="row">
+             {% for book in books  %}
+            <div class="col-lg-4">
+                 <div class="card" style="width: 18rem;">
+              <img src="{{book.cover_image_url}}" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title">{{book.title}}</h5>
+                  <h5>Author: {{book.author}}</h5>
+                <!--<p class="card-text">{{book.description}}</p>-->
+                <a href="{% url 'book-detail' book.id %}" class="btn btn-primary">See more</a>
+                <a href="{% url 'book-detail' book.id %}" class="btn btn-primary">Edit</a>
+                  <!--{% if can_edit %}-->
+                
+                    <!--{% endif %}-->
+              </div>
+            </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% else %}
+            <h3>You do not have any books</h3>
+        {% endif %}
+    </div>
+
+</body>
+</html>
