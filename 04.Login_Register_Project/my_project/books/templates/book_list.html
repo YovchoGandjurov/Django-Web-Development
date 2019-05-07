@@ -18,10 +18,10 @@
                   <h5>Author: {{book.author}}</h5>
                 <!--<p class="card-text">{{book.description}}</p>-->
                 <a href="{% url 'book-detail' book.id %}" class="btn btn-primary">See more</a>
-                <a href="{% url 'book-detail' book.id %}" class="btn btn-primary">Edit</a>
-                  <!--{% if can_edit %}-->
                 
-                    <!--{% endif %}-->
+                {% if can_edit %}
+                <a href="{% url 'book-detail' book.id %}" class="btn btn-primary">Edit</a>
+                {% endif %}
               </div>
             </div>
             </div>
