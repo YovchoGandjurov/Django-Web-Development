@@ -8,6 +8,8 @@ from django.http import Http404
 from .models import Question, Answer, Profile
 from .serializers import QuestionSerializer, AnswerSerializer, \
                          ProfileSerializer
+from rest_framework import permissions
+from .permissions import IsOwnerOrReadOnly
 
 
 class QuestionsList(APIView):
@@ -28,14 +30,14 @@ class QuestionsList(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly, )
+
 
 class QuestionDetail(APIView):
     """
     Retrieve, update or delete a question instance.
     """
     def get_object(self, pk):
-        # obj = get_object_or_404(Question, pk=pk)
-        # return obj
         try:
             return Question.objects.get(pk=pk)
         except Question.DoesNotExist:
@@ -60,6 +62,9 @@ class QuestionDetail(APIView):
         question.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
 
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,
+                          IsOwnerOrReadOnly)
+
 
 class AnswersList(APIView):
     """
@@ -78,16 +83,14 @@ class AnswersList(APIView):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly, )
+
 
 class AnswerDetail(APIView):
     """
     Retrieve, update or delete a answer instance.
     """
     def get_object(self, answer_id, question_id):
-        # Another way without get_object:
-        # answer = get_object_or_404(Answer, pk=answer_id,
-        #                            question_id=question_id)
-
         try:
             return Answer.objects.get(pk=answer_id, question_id=question_id)
         except Answer.DoesNotExist:
@@ -125,6 +128,9 @@ class AnswerDetail(APIView):
         answer = self.get_object(answer_id=answer_id, question_id=question_id)
         answer.delete()
         return Response(status=status.HTTP_204_NO_CONTENT)
+
+    permission_classes = (permissions.IsAuthenticatedOrReadOnly,
+                          IsOwnerOrReadOnly)
 
 
 class UserList(APIView):

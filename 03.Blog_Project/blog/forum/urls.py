@@ -1,9 +1,9 @@
-from django.urls import path, re_path
+from django.urls import path, re_path, include
 from . import views
 
 
 urlpatterns = [
-    re_path('^question/$', views.QuestionsList.as_view(), name='questions'),
+    re_path('^questions/$', views.QuestionsList.as_view(), name='questions'),
     re_path('^question/(?P<question_id>\d+)/$',
             views.QuestionDetail.as_view(),
             name='question_detail'),
@@ -13,5 +13,5 @@ urlpatterns = [
     re_path('^question/(?P<question_id>\d+)/answer/(?P<answer_id>\d+)/$',
             views.AnswerDetail.as_view(),
             name='answers_detail'),
-    re_path('^users/questions/$', views.UserList.as_view(), name='users')
+    re_path('^users/questions/$', views.UserList.as_view(), name='users'),
 ]
