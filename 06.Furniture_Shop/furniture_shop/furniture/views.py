@@ -28,7 +28,6 @@ class UserFurnitureList(LoginRequiredMixin, generic.ListView):
 
 
 class FurnitureCreate(LoginRequiredMixin, generic.CreateView):
-    model = Furniture
     template_name = 'furniture_create.html'
     form_class = CreateFurnitureForm
     success_url = '/furniture/'
@@ -42,3 +41,24 @@ class FurnitureDetail(LoginRequiredMixin, generic.DetailView):
     model = Furniture
     template_name = 'furniture_detail.html'
     context_object_name = 'furniture'
+
+    # def get_context_data(self, *, object_list=None, **kwargs):
+    #     pass
+
+
+class FurnitureEdit(LoginRequiredMixin, generic.UpdateView):
+    model = Furniture
+    template_name = 'furniture_create.html'
+    form_class = CreateFurnitureForm
+    success_url = '/furniture/'
+
+    def form_valid(self, form):
+        form.instance.user = Profile.objects.get(user__pk=self.request.user.id)
+        return super().form_valid(form)
+
+
+class FurnitureDelete(LoginRequiredMixin, generic.DeleteView):
+    model = Furniture
+    template_name = 'furniture_delete.html'
+    context_object_name = 'furniture'
+    success_url = '/furniture/'

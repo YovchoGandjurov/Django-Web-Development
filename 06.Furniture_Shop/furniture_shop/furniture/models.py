@@ -4,7 +4,7 @@ from django.core.validators import MinValueValidator
 from accounts.models import Profile
 
 
-class Maretial(models.Model):
+class Material(models.Model):
     name = models.CharField(max_length=200)
 
     def __str__(self):
@@ -18,7 +18,7 @@ class Furniture(models.Model):
     description = models.TextField()
     price = models.PositiveIntegerField(validators=[MinValueValidator(10)])
     image_url = models.URLField()
-    material = models.ForeignKey(Maretial, on_delete=models.CASCADE,
+    material = models.ForeignKey(Material, on_delete=models.CASCADE,
                                  blank=True, null=True)
 
     def __str__(self):

@@ -1,7 +1,7 @@
 from django import forms
 from django.core.validators import MinValueValidator
 
-from .models import Furniture, Maretial
+from .models import Furniture, Material
 
 
 form_control = {'class': 'form-control'}
@@ -9,6 +9,14 @@ form_control = {'class': 'form-control'}
 
 def text_input_widget():
     return forms.TextInput(attrs=form_control)
+
+
+class MaterialForm(forms.ModelForm):
+    name = forms.CharField(required=True, widget=text_input_widget())
+
+    class Meta:
+        model = Material
+        fields = '__all__'
 
 
 class CreateFurnitureForm(forms.ModelForm):
@@ -30,7 +38,7 @@ class CreateFurnitureForm(forms.ModelForm):
     image_url = forms.URLField(required=True, widget=text_input_widget())
     material = forms.ModelChoiceField(
         required=False,
-        queryset=Maretial.objects.all(),
+        queryset=Material.objects.all(),
         widget=forms.Select(attrs=form_control)
     )
 

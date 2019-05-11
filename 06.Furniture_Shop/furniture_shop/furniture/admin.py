@@ -1,7 +1,7 @@
 from django.contrib import admin
 
-from .models import Maretial, Furniture
+from .models import Material, Furniture
 
 
 admin.site.register(Furniture)
-admin.site.register(Maretial)
+admin.site.register(Material)

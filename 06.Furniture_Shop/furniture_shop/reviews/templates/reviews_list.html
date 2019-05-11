@@ -1,0 +1,29 @@
+{% block inner_content %}
+    <div class="row" style="background-color: #f1e3e3; padding:2%">
+
+ {% if reviews %}
+    {% for review in reviews %}
+
+           <div class="box">
+              <h4>{{review.author}}</h4>
+               <h6>Raiting: {{review.score}}</h6>
+               <hr>
+               <p> <em> {{review.content}}</em> </p>
+           </div>
+
+    {% endfor %}
+
+{% else %}
+    <div class="box"> <h3>There are no reviews for this furniture. </h3></div>
+{% endif %}
+
+        <div class="box">
+            <form method="post">
+                {% csrf_token %}
+            {{form}}
+                <button class="btn btn-primary" type="submit">Add review</button>
+            </form>
+        </div>
+ </div>
+
+{% endblock %}

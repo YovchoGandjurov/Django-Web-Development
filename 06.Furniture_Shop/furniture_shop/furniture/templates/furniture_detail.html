@@ -14,13 +14,14 @@
         <h3>Price: {{furniture.price}}</h3>
         <p>Description: {{furniture.description}}</p>
 
-        <a href="/todeitID" class="btn btn-success">Edit</a>
-        <a href="/todeleteID" class="btn btn-danger">Delete</a>
+        <a href="{% url 'furniture-edit' furniture.id %}" class="btn btn-success">Edit</a>
+        <a href="{% url 'furniture-delete' furniture.id %}" class="btn btn-danger">Delete</a>
     </div>
 </div>
     <div class="row">
     <div class="col-lg-12">
-        //here include reviews with vars for (reviews and form)
+        {% block 'inner_content' %}
+        {% endblock %}
     </div>
 </div>
 
