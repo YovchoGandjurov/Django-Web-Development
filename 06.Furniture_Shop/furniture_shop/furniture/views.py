@@ -36,3 +36,9 @@ class FurnitureCreate(LoginRequiredMixin, generic.CreateView):
     def form_valid(self, form):
         form.instance.user = Profile.objects.get(user__pk=self.request.user.id)
         return super().form_valid(form)
+
+
+class FurnitureDetail(LoginRequiredMixin, generic.DetailView):
+    model = Furniture
+    template_name = 'furniture_detail.html'
+    context_object_name = 'furniture'

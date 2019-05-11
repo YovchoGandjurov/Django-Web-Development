@@ -1,0 +1,23 @@
+.card {
+    background-color: black;
+    color: white;
+    margin: 5% 0%;
+}
+
+.btn-primary:hover {
+    background-color: ligthgrey;
+    color: grey;
+    border: 1px solid grey;
+}
+
+.btn-primary {
+    background-color: grey;
+    color: ligthgrey;
+    border: 1px solid grey;
+}
+
+.furniture-form {
+    border: 1px solid grey;
+    padding: 5% 6%;
+    margin: 5% 0%;
+}

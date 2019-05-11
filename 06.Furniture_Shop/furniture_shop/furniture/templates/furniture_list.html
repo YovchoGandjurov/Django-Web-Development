@@ -10,7 +10,7 @@
                 <div class="card-body">
                 <h5 class="card-title">{{f.model}}</h5>
                 <p class="card-text">{{f.description}}</p>
-                <a href="/todetailID" class="btn btn-primary">See details</a>
+                <a href="{% url 'furniture-detail' f.id %}" class="btn btn-primary">See details</a>
                 </div>
             </div>
         </div>
