@@ -7,6 +7,7 @@ from accounts.models import Profile
 from .forms import CreateFurnitureForm, MaterialForm
 from reviews.models import Review
 from .permissions import SameUserOnlyMixin, AdminOnlyMixin
+from reviews.forms import ReviewForm
 
 
 def has_user_access_to_modify(current_user, current_obj):
@@ -54,12 +55,31 @@ class FurnitureDetail(LoginRequiredMixin, generic.DetailView):
         context['reviews'] = Review.objects.all().filter(
                                 furniture=self.get_object())
 
+        context['form'] = ReviewForm()
+
         current_user = self.request.user
         if has_user_access_to_modify(current_user, self.get_object()):
             context['is_users_furniture'] = True
         else:
             context['is_users_furniture'] = False
         return context
+
+    def post(self, request, pk):
+        url = f'/furniture/details/{self.get_object().id}/'
+        post_values = request.POST.copy()
+        form = ReviewForm(post_values)
+
+        if form.is_valid():
+            author = Profile.objects.get(user__pk=request.user.id)
+            post_values['furniture'] = self.get_object()
+            review = Review(
+                content=post_values['content'],
+                score=post_values['score'],
+                furniture=self.get_object(),
+                author=author
+            )
+            review.save()
+        return HttpResponseRedirect(url)
 
 
 class FurnitureEdit(LoginRequiredMixin,
@@ -82,6 +102,7 @@ class FurnitureDelete(LoginRequiredMixin,
     success_url = '/furniture/'
 
     # replaced with custom permission class - SameUserOnlyMixin
+    # 
     # def get(self, request, pk):
     #     if has_user_access_to_modify(request.user, self.get_object()):
     #         return render(request, 'furniture_delete.html',

@@ -1,5 +1,6 @@
 {% block inner_content %}
-    <div class="row" style="background-color: #f1e3e3; padding:2%">
+
+    <div class="row" style="background-color: #f5f9fc; padding:2%">
 
  {% if reviews %}
     {% for review in reviews %}
@@ -20,7 +21,7 @@
         <div class="box">
             <form method="post">
                 {% csrf_token %}
-            {{form}}
+                {{form}}
                 <button class="btn btn-primary" type="submit">Add review</button>
             </form>
         </div>
