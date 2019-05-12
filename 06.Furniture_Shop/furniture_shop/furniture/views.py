@@ -6,6 +6,7 @@ from .models import Furniture
 from accounts.models import Profile
 from .forms import CreateFurnitureForm
 from reviews.models import Review
+from .permissions import SameUserOnlyMixin
 
 
 def has_user_access_to_modify(current_user, current_obj):
@@ -61,7 +62,8 @@ class FurnitureDetail(LoginRequiredMixin, generic.DetailView):
         return context
 
 
-class FurnitureEdit(LoginRequiredMixin, generic.UpdateView):
+class FurnitureEdit(LoginRequiredMixin,
+                    SameUserOnlyMixin, generic.UpdateView):
     model = Furniture
     template_name = 'furniture_create.html'
     form_class = CreateFurnitureForm
@@ -72,21 +74,23 @@ class FurnitureEdit(LoginRequiredMixin, generic.UpdateView):
         return super().form_valid(form)
 
 
-class FurnitureDelete(LoginRequiredMixin, generic.DeleteView):
+class FurnitureDelete(LoginRequiredMixin,
+                      SameUserOnlyMixin, generic.DeleteView):
     model = Furniture
     template_name = 'furniture_delete.html'
     context_object_name = 'furniture'
     success_url = '/furniture/'
 
-    def get(self, request, pk):
-        if has_user_access_to_modify(request.user, self.get_object()):
-            return render(request, 'furniture_delete.html',
-                          {'furniture': self.get_object()})
-        return render(request, 'permission_denied.html')
-
-    def post(self, request, pk):
-        if has_user_access_to_modify(request.user, self.get_object()):
-            furniture = self.get_object()
-            furniture.delete()
-            return HttpResponseRedirect('/furniture/')
-        return render(request, 'permission_denied.html')
+    # replaced with custom permission class - SameUserOnlyMixin
+    # def get(self, request, pk):
+    #     if has_user_access_to_modify(request.user, self.get_object()):
+    #         return render(request, 'furniture_delete.html',
+    #                       {'furniture': self.get_object()})
+    #     return render(request, 'permission_denied.html')
+    # 
+    # def post(self, request, pk):
+    #     if has_user_access_to_modify(request.user, self.get_object()):
+    #         furniture = self.get_object()
+    #         furniture.delete()
+    #         return HttpResponseRedirect('/furniture/')
+    #     return render(request, 'permission_denied.html')
