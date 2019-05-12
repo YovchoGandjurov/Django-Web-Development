@@ -12,5 +12,7 @@ urlpatterns = [
     re_path('^edit/(?P<pk>\d+)/$', views.FurnitureEdit.as_view(),
             name='furniture-edit'),
     re_path('^delete/(?P<pk>\d+)/$', views.FurnitureDelete.as_view(),
-            name='furniture-delete')
+            name='furniture-delete'),
+    re_path('^material/$', views.CreateMaterial.as_view(),
+            name='material-add'),
 ]

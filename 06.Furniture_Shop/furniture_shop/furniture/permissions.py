@@ -12,3 +12,14 @@ class SameUserOnlyMixin(object):
             return render(request, 'permission_denied.html')
         return super(SameUserOnlyMixin, self).dispatch(
                         request, *args, **kwargs)
+
+
+class AdminOnlyMixin(object):
+    def has_permissions(self):
+        return self.request.user.is_superuser
+
+    def dispatch(self, request, *args, **kwargs):
+        if not self.has_permissions():
+            return render(request, 'permission_denied.html')
+        return super(AdminOnlyMixin, self).dispatch(
+                        request, *args, **kwargs)

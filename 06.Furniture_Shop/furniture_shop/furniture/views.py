@@ -2,11 +2,11 @@ from django.shortcuts import render, HttpResponseRedirect
 from django.views import generic
 from django.contrib.auth.mixins import LoginRequiredMixin
 
-from .models import Furniture
+from .models import Furniture, Material
 from accounts.models import Profile
-from .forms import CreateFurnitureForm
+from .forms import CreateFurnitureForm, MaterialForm
 from reviews.models import Review
-from .permissions import SameUserOnlyMixin
+from .permissions import SameUserOnlyMixin, AdminOnlyMixin
 
 
 def has_user_access_to_modify(current_user, current_obj):
@@ -94,3 +94,11 @@ class FurnitureDelete(LoginRequiredMixin,
     #         furniture.delete()
     #         return HttpResponseRedirect('/furniture/')
     #     return render(request, 'permission_denied.html')
+
+
+class CreateMaterial(LoginRequiredMixin,
+                     AdminOnlyMixin, generic.CreateView):
+    model = Material
+    form_class = MaterialForm
+    template_name = 'material_create.html'
+    success_url = '/furniture/'
