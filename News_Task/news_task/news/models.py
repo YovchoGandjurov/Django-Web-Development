@@ -6,3 +6,6 @@ class News(models.Model):
     title = models.CharField(max_length=255)
     short_description = models.CharField(max_length=255)
     text = models.TextField()
+
+    def __str__(self):
+        return f'{self.title}'
