@@ -4,5 +4,7 @@ from . import views
 
 urlpatterns = [
     path('', views.AppointmentList.as_view(),
-         name='appointment-list')
+         name='appointment-list'),
+    re_path('detail/(?P<pk>\d+)/', views.AppointmentDetail.as_view(),
+         name='appointment-detail')
 ]

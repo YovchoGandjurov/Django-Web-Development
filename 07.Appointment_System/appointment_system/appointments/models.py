@@ -7,7 +7,7 @@ from accounts.models import Patient, Doctor
 
 
 class Appointment(models.Model):
-    date = models.DateTimeField()
+    date = models.DateField()
     reason = models.CharField(max_length=200)
     doctor_type = models.CharField(
                         max_length=20,
